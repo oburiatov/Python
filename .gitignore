@@ -1,0 +1,5 @@
+#file with secrets
+**/secrets.yaml
+
+#DS_Store
+**/.DS_Store

@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hive-insert
+  namespace: prod
+spec:
+  template:
+    metadata:
+      labels:
+        app: hive
+        component: hiveinsert
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: hiveinsert
+          image: devops/python_insert_hive:0.17
+          imagePullPolicy: Always
+          env:
+            - name: HIVE_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-hiveinsert
+                  key: HIVE_HOSTNAME
+            - name: HIVE_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-hiveinsert
+                  key: HIVE_PORT
+            - name: HIVE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-hiveinsert
+                  key: HIVE_USERNAME
+            - name: HIVE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-hiveinsert
+                  key: HIVE_PASSWORD
+            - name: PERIOD_FROM
+              valueFrom:
+                secretKeyRef:
+                  name: secret-hiveinsert
+                  key: PERIOD_FROM
+            - name: PERIOD_TO
+              valueFrom:
+                secretKeyRef:
+                  name: secret-hiveinsert
+                  key: PERIOD_TO
+
